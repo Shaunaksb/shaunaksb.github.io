@@ -104,18 +104,24 @@ Dharampeth M P Deo Memorial Science College
 Email: shaunakbalkundi@example.com
 LinkedIn: https://linkedin.com/in/shaunakbalkundi
 GitHub: https://github.com/shaunaksb
+Instagram: https://instagram.com/shaunakbalkundi
     `,
     "help": `
 Available commands:
-- <span class="clickable-command">portofetch</span>: Show system information
-- <span class="clickable-command">skills</span>: Show my skills
+- <span class="clickable-command">help</span>: Show available commands
+- <span class="clickable-command">portofetch</span>: Brief Information about me
 - <span class="clickable-command">about</span>: About me
+- <span class="clickable-command">skills</span>: Show my skills
 - <span class="clickable-command">projects</span>: My projects
 - <span class="clickable-command">education</span>: My education
 - <span class="clickable-command">contact</span>: How to contact me
-- <span class="clickable-command">email</span>: Open email client
+- <span class="clickable-command">email</span>: Email me
+- <span class="clickable-command">linkedin</span>: Open LinkedIn profile
+- <span class="clickable-command">github</span>: Open GitHub profile
+- <span class="clickable-command">instagram</span>: Open Instagram profile
+- <span class="clickable-command">history</span>: Show command history
 - <span class="clickable-command">clear</span>: Clear the screen
-- <span class="clickable-command">help</span>: Show available commands
+- <span class="clickable-command">exit</span>: Close the terminal
     `
 };
 
@@ -142,6 +148,18 @@ function executeCommand(command, displayPrompt = true) {
         outputContainer.appendChild(newOutput);
         inputField.value = '';
         outputContainer.scrollTop = outputContainer.scrollHeight;
+    } else if (command === 'linkedin') {
+        window.open('https://linkedin.com/in/shaunakbalkundi', '_blank');
+        inputField.value = '';
+    } else if (command === 'github') {
+        window.open('https://github.com/shaunaksb', '_blank');
+        inputField.value = '';
+    } else if (command === 'instagram') { 
+        window.open('https://instagram.com/shaunakbalkundi', '_blank');
+        inputField.value = '';
+    } else if (command === 'exit') {
+        inputField.value = '';
+        close();
     } else {
         const errorOutput = document.createElement('div');
         errorOutput.innerHTML = `Command not found`;
