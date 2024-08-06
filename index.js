@@ -2,28 +2,66 @@ const terminal = document.getElementById('terminal');
 const inputField = document.getElementById('user-input');
 const outputContainer = document.getElementById('auto-run-output');
 const switchToMobileButton = document.getElementById('switch-to-mobile');
+const neofetchContainer = document.getElementById('neofetch-container');
+
+const asciiArt = `
+         888                                          888               888      
+         888                                          888               888      
+         888                                          888               888      
+.d8888b  88888b.   8888b.  888  888 88888b.   8888b.  888  888 .d8888b  88888b.  
+88K      888 "88b     "88b 888  888 888 "88b     "88b 888 .88P 88K      888 "88b 
+"Y8888b. 888  888 .d888888 888  888 888  888 .d888888 888888K  "Y8888b. 888  888 
+     X88 888  888 888  888 Y88b 888 888  888 888  888 888 "88b      X88 888 d88P 
+ 88888P' 888  888 "Y888888  "Y88888 888  888 "Y888888 888  888  88888P' 88888P"
+`;
+
+const systemInfo = {
+    "OS": "Personal Portfolio for Shaunak Balkundi",
+    "Terminal": "Web Terminal",
+    "Languages": "Python, JavaScript, Java",
+    "Frameworks": "Django, ReactJS, Spring, NodeJS",
+    "Database": "MongoDB, PostgreSQL, MySQL",
+    "Tools": "Git, Docker, Apache Kafka"
+};
 
 const terminalCommands = {
-    "portofetch": `
-OS: Personal Portfolio for Shaunak Balkundi
-Terminal: Web Terminal
-Languages: Python, JavaScript, Java
-Frameworks: Django, ReactJS, Spring, NodeJS
-Database: MongoDB, PostgreSQL, MySQL
-Tools: Git, Docker, Apache Kafka
-    `,
-    "skills": `
-<i class="fab fa-python skill-icon"></i> Python       [#####     ] 70%
-<i class="fab fa-js skill-icon"></i> JavaScript   [######    ] 60%
-<i class="fab fa-java skill-icon"></i> Java         [#####     ] 50%
-<i class="fab fa-react skill-icon"></i> ReactJS      [#######   ] 70%
-<i class="fab fa-node skill-icon"></i> NodeJS       [#####     ] 60%
-<i class="fab fa-docker skill-icon"></i> Docker       [#####     ] 50%
-<i class="fas fa-database skill-icon"></i> MongoDB      [######    ] 60%
-<i class="fas fa-database skill-icon"></i> PostgreSQL   [#####     ] 50%
-<i class="fab fa-git-alt skill-icon"></i> Git          [#######   ] 80%
-<i class="fab fa-linux skill-icon"></i> Linux       [######    ] 60%
-    `,
+    "portofetch": function(container) {
+        container.innerHTML = `
+            <div class="portofetch-container">
+                <pre id="ascii-art">${asciiArt}</pre>
+                <div id="system-info">
+                    ${Object.entries(systemInfo).map(([key, value]) => `<p class="info-line"><span class="info-label">${key}:</span> ${value}</p>`).join('')}
+                </div>
+            </div>
+        `;
+    },
+    "skills": function(container) {
+        const skills = [
+            { name: "Python", icon: "devicon-python-plain" },
+            { name: "JavaScript", icon: "devicon-javascript-plain" },
+            { name: "Java", icon: "devicon-java-plain" },
+            { name: "ReactJS", icon: "devicon-react-original" },
+            { name: "NodeJS", icon: "devicon-nodejs-plain" },
+            { name: "Docker", icon: "devicon-docker-plain" },
+            { name: "MongoDB", icon: "devicon-mongodb-plain" },
+            { name: "PostgreSQL", icon: "devicon-postgresql-plain" },
+            { name: "Git", icon: "devicon-git-plain" },
+            { name: "Linux", icon: "devicon-linux-plain" }
+        ];
+
+        const skillsHtml = skills.map(skill => `
+            <div class="skill-item">
+                <i class="${skill.icon}"></i>
+                ${skill.name}
+            </div>
+        `).join('');
+
+        container.innerHTML = `
+            <div class="skills-container">
+                ${skillsHtml}
+            </div>
+        `;
+    },
     "about": `
 Hello! I'm Shaunak Balkundi, a Full Stack Developer. I'm fascinated by anything that works fast and I strive to write efficient code.
     `,
@@ -63,24 +101,29 @@ Available commands:
     `
 };
 
-function autoRun() {
-    const command = "portofetch";
-    outputContainer.innerHTML = `<div>[shaunaksb@portfolio]~$ <span class="command">${command}</span></div><div>${terminalCommands[command]}</div>`;
-}
+function executeCommand(command, displayPrompt = true) {
+    if (displayPrompt) {
+        const promptLine = document.createElement('div');
+        promptLine.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span>`;
+        outputContainer.appendChild(promptLine);
+    }
 
-function executeCommand(command) {
     if (command === 'email') {
         window.location.href = 'mailto:shaunak.balkundi@gmail.com';
         inputField.value = '';
-    } else if (terminalCommands[command]) {
+    } else if (command in terminalCommands) {
         const newOutput = document.createElement('div');
-        newOutput.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span><div>${terminalCommands[command]}</div>`;
+        if (typeof terminalCommands[command] === 'function') {
+            terminalCommands[command](newOutput);
+        } else {
+            newOutput.innerHTML = terminalCommands[command];
+        }
         outputContainer.appendChild(newOutput);
         inputField.value = '';
         outputContainer.scrollTop = outputContainer.scrollHeight;
     } else {
         const errorOutput = document.createElement('div');
-        errorOutput.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span><div>Command not found</div>`;
+        errorOutput.innerHTML = `Command not found`;
         outputContainer.appendChild(errorOutput);
         inputField.value = '';
         outputContainer.scrollTop = outputContainer.scrollHeight;
@@ -98,7 +141,6 @@ switchToMobileButton.addEventListener('click', function() {
     window.location.href = 'mobile.html';
 });
 
-// Add event delegation for clickable commands in the help menu
 outputContainer.addEventListener('click', function(e) {
     if (e.target.classList.contains('clickable-command')) {
         const command = e.target.textContent;
@@ -106,4 +148,6 @@ outputContainer.addEventListener('click', function(e) {
     }
 });
 
-window.onload = autoRun;
+window.onload = function() {
+    executeCommand('portofetch', true);
+};

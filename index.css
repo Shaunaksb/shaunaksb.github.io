@@ -8,15 +8,11 @@ body, html {
   overflow: hidden;
 }
 
-#terminal, #gui {
+#terminal {
   height: 100%;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
-}
-
-#gui {
-  display: none;
 }
 
 #header {
@@ -29,15 +25,38 @@ body, html {
 #content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+}
+
+.portofetch-container {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: flex-start;
 }
 
 #ascii-art {
   color: #00ffff;
-  margin-bottom: 20px;
   font-size: 12px;
   white-space: pre;
-  overflow-x: auto;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+#system-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.info-line {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.info-label {
+  color: #4d8f8f;
+  font-weight: bold;
 }
 
 #main {
@@ -72,15 +91,6 @@ body, html {
   white-space: pre-wrap;
 }
 
-a {
-  color: #00ffff;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 .command {
   color: #4d8f8f;
 }
@@ -94,24 +104,6 @@ a:hover {
   font-size: 16px;
   border-radius: 5px;
   margin-top: 20px;
-}
-
-.skill-icon {
-  color: #00ffff;
-  margin-right: 8px;
-}
-
-.skill-bar {
-  background-color: #1f1f43;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.skill-bar-fill {
-  display: block;
-  height: 10px;
-  border-radius: 5px;
 }
 
 #switch-to-mobile {
@@ -131,24 +123,44 @@ a:hover {
   color: #00ffff;
 }
 
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.skill-item i {
+  color: #00ffff;
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
 @media (max-width: 768px) {
   #header {
-    font-size: 32px;
+      font-size: 32px;
+  }
+
+  .portofetch-container {
+      flex-direction: column;
   }
 
   #ascii-art {
-    font-size: 8px;
+      font-size: 8px;
+      margin-right: 0;
+      margin-bottom: 20px;
   }
 
-  #content {
-    flex-direction: column;
-  }
-
-  #terminal, #gui {
-    padding: 10px;
+  #terminal {
+      padding: 10px;
   }
 
   #user-input {
-    font-size: 14px;
+      font-size: 14px;
   }
 }
