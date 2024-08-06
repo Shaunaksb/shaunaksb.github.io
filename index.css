@@ -97,6 +97,12 @@ body, html {
   color: #4d8f8f;
 }
 
+.command-output {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+}
+
 .button {
   background-color: #4d4d8f;
   color: #00ffff;

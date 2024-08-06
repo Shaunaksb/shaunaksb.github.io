@@ -35,6 +35,15 @@ const terminalCommands = {
             </div>
         `;
     },
+
+    "history": function(container) {
+        container.innerHTML = `
+            <div class="command-output">
+                <pre>${commandHistory.join('\n')}</pre>
+            </div>
+        `;
+    },
+
     "skills": function(container) {
         const skills = [
             { name: "Python", icon: "devicon-python-plain" },
@@ -110,7 +119,10 @@ Available commands:
     `
 };
 
+let commandHistory = [];
+let historyIndex = -1;
 function executeCommand(command, displayPrompt = true) {
+    commandHistory.push(command);
     if (displayPrompt) {
         const promptLine = document.createElement('div');
         promptLine.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span>`;
@@ -160,3 +172,20 @@ outputContainer.addEventListener('click', function(e) {
 window.onload = function() {
     executeCommand('portofetch', true);
 };
+
+inputField.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowUp') {
+        if (historyIndex > 0) {
+            historyIndex--;
+            inputField.value = commandHistory[historyIndex];
+        }
+    } else if (event.key === 'ArrowDown') {
+        if (historyIndex < commandHistory.length - 1) {
+            historyIndex++;
+            inputField.value = commandHistory[historyIndex];
+        } else {
+            historyIndex = commandHistory.length;
+            inputField.value = '';
+        }
+    }
+});
