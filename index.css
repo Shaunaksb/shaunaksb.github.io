@@ -28,12 +28,16 @@ body, html {
 
 #content {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
 #ascii-art {
   color: #00ffff;
-  margin-right: 20px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  white-space: pre;
+  overflow-x: auto;
 }
 
 #main {
@@ -111,7 +115,40 @@ a:hover {
 }
 
 #switch-to-mobile {
-  position: absolute;
-  top: 20px;
+  position: fixed;
+  bottom: 20px;
   right: 20px;
+  z-index: 1000;
+}
+
+.clickable-command {
+  color: #4d8f8f;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.clickable-command:hover {
+  color: #00ffff;
+}
+
+@media (max-width: 768px) {
+  #header {
+    font-size: 32px;
+  }
+
+  #ascii-art {
+    font-size: 8px;
+  }
+
+  #content {
+    flex-direction: column;
+  }
+
+  #terminal, #gui {
+    padding: 10px;
+  }
+
+  #user-input {
+    font-size: 14px;
+  }
 }

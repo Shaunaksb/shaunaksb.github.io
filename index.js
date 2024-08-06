@@ -1,11 +1,7 @@
 const terminal = document.getElementById('terminal');
 const inputField = document.getElementById('user-input');
 const outputContainer = document.getElementById('auto-run-output');
-
-// Mobile device detection and redirection
-if (/Mobi|Android/i.test(navigator.userAgent)) {
-    window.location.href = 'mobile.html';
-}
+const switchToMobileButton = document.getElementById('switch-to-mobile');
 
 const terminalCommands = {
     "portofetch": `
@@ -56,14 +52,14 @@ GitHub: https://github.com/shaunaksb
     `,
     "help": `
 Available commands:
-- portofetch: Show system information
-- skills: Show my skills
-- about: About me
-- projects: My projects
-- education: My education
-- contact: How to contact me
-- email: Open email client
-- help: Show available commands
+- <span class="clickable-command">portofetch</span>: Show system information
+- <span class="clickable-command">skills</span>: Show my skills
+- <span class="clickable-command">about</span>: About me
+- <span class="clickable-command">projects</span>: My projects
+- <span class="clickable-command">education</span>: My education
+- <span class="clickable-command">contact</span>: How to contact me
+- <span class="clickable-command">email</span>: Open email client
+- <span class="clickable-command">help</span>: Show available commands
     `
 };
 
@@ -72,25 +68,41 @@ function autoRun() {
     outputContainer.innerHTML = `<div>[shaunaksb@portfolio]~$ <span class="command">${command}</span></div><div>${terminalCommands[command]}</div>`;
 }
 
+function executeCommand(command) {
+    if (command === 'email') {
+        window.location.href = 'mailto:shaunak.balkundi@gmail.com';
+        inputField.value = '';
+    } else if (terminalCommands[command]) {
+        const newOutput = document.createElement('div');
+        newOutput.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span><div>${terminalCommands[command]}</div>`;
+        outputContainer.appendChild(newOutput);
+        inputField.value = '';
+        outputContainer.scrollTop = outputContainer.scrollHeight;
+    } else {
+        const errorOutput = document.createElement('div');
+        errorOutput.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span><div>Command not found</div>`;
+        outputContainer.appendChild(errorOutput);
+        inputField.value = '';
+        outputContainer.scrollTop = outputContainer.scrollHeight;
+    }
+}
+
 inputField.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
         const command = inputField.value.trim();
-        if (command === 'email') {
-            window.location.href = 'mailto:shaunakbalkundi@example.com';
-            inputField.value = '';
-        } else if (terminalCommands[command]) {
-            const newOutput = document.createElement('div');
-            newOutput.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span><div>${terminalCommands[command]}</div>`;
-            outputContainer.appendChild(newOutput);
-            inputField.value = '';
-            outputContainer.scrollTop = outputContainer.scrollHeight;
-        } else {
-            const errorOutput = document.createElement('div');
-            errorOutput.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span><div>Command not found</div>`;
-            outputContainer.appendChild(errorOutput);
-            inputField.value = '';
-            outputContainer.scrollTop = outputContainer.scrollHeight;
-        }
+        executeCommand(command);
+    }
+});
+
+switchToMobileButton.addEventListener('click', function() {
+    window.location.href = 'mobile.html';
+});
+
+// Add event delegation for clickable commands in the help menu
+outputContainer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('clickable-command')) {
+        const command = e.target.textContent;
+        executeCommand(command);
     }
 });
 
