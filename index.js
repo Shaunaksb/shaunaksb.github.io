@@ -40,19 +40,24 @@ const terminalCommands = {
             { name: "Python", icon: "devicon-python-plain" },
             { name: "JavaScript", icon: "devicon-javascript-plain" },
             { name: "Java", icon: "devicon-java-plain" },
+            { name: "Django", icon: "devicon-django-plain" },
             { name: "ReactJS", icon: "devicon-react-original" },
+            { name: "Spring", icon: "devicon-spring-plain" },
             { name: "NodeJS", icon: "devicon-nodejs-plain" },
-            { name: "Docker", icon: "devicon-docker-plain" },
+            { name: "FastAPI", icon: "devicon-fastapi-plain" },
             { name: "MongoDB", icon: "devicon-mongodb-plain" },
             { name: "PostgreSQL", icon: "devicon-postgresql-plain" },
+            { name: "MySQL", icon: "devicon-mysql-plain" },
+            { name: "Apache Kafka", icon: "devicon-apachekafka-plain" },
             { name: "Git", icon: "devicon-git-plain" },
-            { name: "Linux", icon: "devicon-linux-plain" }
+            { name: "Linux", icon: "devicon-linux-plain" },
+            { name: "Docker", icon: "devicon-docker-plain" },
+            { name: "Redis", icon: "devicon-redis-plain" }
         ];
 
         const skillsHtml = skills.map(skill => `
             <div class="skill-item">
-                <i class="${skill.icon}"></i>
-                ${skill.name}
+                <i class="${skill.icon}"></i>   ${skill.name}
             </div>
         `).join('');
 
@@ -61,6 +66,9 @@ const terminalCommands = {
                 ${skillsHtml}
             </div>
         `;
+    },
+    "clear": function() {
+        outputContainer.innerHTML = '';
     },
     "about": `
 Hello! I'm Shaunak Balkundi, a Full Stack Developer. I'm fascinated by anything that works fast and I strive to write efficient code.
@@ -97,6 +105,7 @@ Available commands:
 - <span class="clickable-command">education</span>: My education
 - <span class="clickable-command">contact</span>: How to contact me
 - <span class="clickable-command">email</span>: Open email client
+- <span class="clickable-command">clear</span>: Clear the screen
 - <span class="clickable-command">help</span>: Show available commands
     `
 };

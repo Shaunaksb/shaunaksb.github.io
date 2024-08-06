@@ -5,7 +5,9 @@ body, html {
   font-family: 'Courier New', monospace;
   background-color: #0f0f23;
   color: #00ffff;
-  overflow: hidden;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
+  /* flex-direction: column-reverse; */
 }
 
 #terminal {
@@ -125,7 +127,7 @@ body, html {
 
 .skills-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4 icons per row */
   gap: 10px;
 }
 
@@ -133,13 +135,20 @@ body, html {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  padding: 0; /* Ensure no padding */
 }
 
 .skill-item i {
   color: #00ffff;
-  margin-right: 10px;
+  margin: 5px; /* Ensure no margin */
+  padding: 0; /* Ensure no padding */
   font-size: 1.2em;
 }
+
+/* .skill-item span {
+  margin: 0; 
+  padding: 0;
+} */
 
 @media (max-width: 768px) {
   #header {
