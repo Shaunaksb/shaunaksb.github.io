@@ -1,27 +1,74 @@
+:root {
+  --background-color: #000000;
+  --text-color: #ffffff;
+  --header-color: #4d4d8f;
+  --info-label-color: #4d8f8f;
+  --command-color: #4d8f8f;
+  --button-background: #4d8d8f;
+  --link-color: #4d8f8f;
+  --link-hover-color: #00ffff;
+}
+
 body, html {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: 'Courier New', monospace;
-  background-color: #0f0f23;
-  color: #00ffff;
-  /* overflow-y: auto; */
-  /* overflow-x: hidden; */
-  /* flex-direction: column-reverse; */
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  filter: blur(10px);
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
+}
+
+#portrait-bg {
+  background-image: url('portrait-image.jpg');
+}
+
+#landscape-bg {
+  background-image: url('landscape-image.jpg');
+}
+
+body.portrait #portrait-bg {
+  opacity: 1;
+}
+
+body.landscape #landscape-bg {
+  opacity: 1;
 }
 
 #terminal {
-  height: 100%;
+  flex-grow: 1;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
+  padding-bottom: 40px;
+  z-index: 2; /* Place terminal above the background */
+  /* background: rgba(0, 0, 0, 0.5); */
+}
+
+.terminal-container * {
+  z-index: 3; /* Ensure text is above the frosted background */
 }
 
 #header {
   font-size: 48px;
   margin-bottom: 20px;
   font-weight: bold;
-  color: #4d4d8f;
+  color: var(--header-color);
 }
 
 #content {
@@ -36,7 +83,7 @@ body, html {
 }
 
 #ascii-art {
-  color: #00ffff;
+  color: var(--text-color);
   font-size: 12px;
   white-space: pre;
   margin-right: 20px;
@@ -57,7 +104,7 @@ body, html {
 }
 
 .info-label {
-  color: #4d8f8f;
+  color: var(--info-label-color);
   font-weight: bold;
 }
 
@@ -71,14 +118,14 @@ body, html {
 }
 
 #prompt {
-  color: #00ffff;
+  color: var(--text-color);
   margin-right: 10px;
 }
 
 #user-input {
   background: transparent;
   border: none;
-  color: #00ffff;
+  color: var(--text-color);
   font-family: 'Courier New', monospace;
   font-size: 16px;
   flex-grow: 1;
@@ -94,7 +141,7 @@ body, html {
 }
 
 .command {
-  color: #4d8f8f;
+  color: var(--command-color);
 }
 
 .command-output {
@@ -104,8 +151,8 @@ body, html {
 }
 
 .button {
-  background-color: #4d4d8f;
-  color: #00ffff;
+  background-color: var(--button-background);
+  color: var(--text-color);
   border: none;
   padding: 10px;
   cursor: pointer;
@@ -116,24 +163,24 @@ body, html {
 
 #switch-to-mobile {
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   right: 20px;
   z-index: 1000;
 }
 
 .clickable-command {
-  color: #4d8f8f;
+  color: var(--command-color);
   cursor: pointer;
   text-decoration: underline;
 }
 
 .clickable-command:hover {
-  color: #00ffff;
+  color: var(--link-hover-color);
 }
 
 .skills-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 icons per row */
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
 
@@ -141,20 +188,15 @@ body, html {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
-  padding: 0; /* Ensure no padding */
+  padding: 0;
 }
 
 .skill-item i {
-  color: #00ffff;
-  margin: 5px; /* Ensure no margin */
-  padding: 0; /* Ensure no padding */
+  color: var(--text-color);
+  margin: 5px;
+  padding: 0;
   font-size: 1.2em;
 }
-
-/* .skill-item span {
-  margin: 0; 
-  padding: 0;
-} */
 
 @media (max-width: 768px) {
   #header {
@@ -178,4 +220,42 @@ body, html {
   #user-input {
       font-size: 14px;
   }
+  #footer {
+    font-size: 10px;
+  }
+
+  #switch-to-mobile {
+    bottom: 25px;
+  }
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /* background-color: var(--background-color); */
+  text-align: center;
+  padding: 5px 0;
+  font-size: 12px;
+  z-index: 1000;
+  margin-top: auto;
+}
+
+#footer a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#footer a:hover {
+  color: var(--link-hover-color);
+}
+
+#content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 30px;
+  box-sizing: border-box;
 }
