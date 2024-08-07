@@ -5,13 +5,12 @@ body, html {
   font-family: 'Courier New', monospace;
   background-color: #0f0f23;
   color: #00ffff;
-  /* overflow-y: auto; */
-  /* overflow-x: hidden; */
-  /* flex-direction: column-reverse; */
+  display: flex;
+  flex-direction: column;
 }
 
 #terminal {
-  height: 100%;
+  flex-grow: 1;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -116,7 +115,7 @@ body, html {
 
 #switch-to-mobile {
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   right: 20px;
   z-index: 1000;
 }
@@ -178,4 +177,33 @@ body, html {
   #user-input {
       font-size: 14px;
   }
+  #footer {
+    font-size: 10px;
+  }
+
+  #switch-to-mobile {
+    bottom: 25px;
+  }
 }
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #0f0f23;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 12px;
+}
+
+#footer a {
+  color: #4d8f8f;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#footer a:hover {
+  color: #00ffff;
+}
+

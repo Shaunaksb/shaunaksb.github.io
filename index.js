@@ -13,15 +13,19 @@ const asciiArt = `
 "Y8888b. 888  888 .d888888 888  888 888  888 .d888888 888888K  "Y8888b. 888  888 
      X88 888  888 888  888 Y88b 888 888  888 888  888 888 "88b      X88 888 d88P 
  88888P' 888  888 "Y888888  "Y88888 888  888 "Y888888 888  888  88888P' 88888P"
+
+                             Full Stack Developer                               
+
 `;
 
 const systemInfo = {
-    "OS": "Personal Portfolio for Shaunak Balkundi",
-    "Terminal": "Web Terminal",
-    "Languages": "Python, JavaScript, Java",
-    "Frameworks": "Django, ReactJS, Spring, NodeJS",
+    "OS": "PortfolioOS, Made by Shaunak Balkundi",
+    "Terminal": "Web",
+    "Languages": "Python, JavaScript, Java, C#",
+    "Frameworks": "Django, ReactJS, Spring, NodeJS, .NET",
     "Database": "MongoDB, PostgreSQL, MySQL",
-    "Tools": "Git, Docker, Apache Kafka"
+    "Tools": "Git, Docker, Apache Kafka",
+    "For more information":" type 'help'"
 };
 
 const terminalCommands = {
@@ -76,11 +80,27 @@ const terminalCommands = {
             </div>
         `;
     },
+    "allinfo": function(container) {
+        const commands = ['about', 'skills', 'projects', 'education', 'contact'];
+        commands.forEach(cmd => {
+            const cmdHeader = document.createElement('div');
+            cmdHeader.innerHTML = `<br><strong>==== ${cmd.toUpperCase()} ====</strong><br>`;
+            container.appendChild(cmdHeader);
+            
+            if (typeof terminalCommands[cmd] === 'function') {
+                const cmdOutput = document.createElement('div');
+                terminalCommands[cmd](cmdOutput);
+                container.appendChild(cmdOutput);
+            } else {
+                container.innerHTML += terminalCommands[cmd];
+            }
+        });
+    },
     "clear": function() {
         outputContainer.innerHTML = '';
     },
     "about": `
-Hello! I'm Shaunak Balkundi, a Full Stack Developer. I'm fascinated by anything that works fast and I strive to write efficient code.
+I'm Shaunak Balkundi, a Full Stack Developer. I'm mostly fascinated by anything that goes fast and I try to write code that works fast!
     `,
     "projects": `
 1. Online Banking & HR Management System
@@ -115,6 +135,7 @@ Available commands:
 - <span class="clickable-command">projects</span>: My projects
 - <span class="clickable-command">education</span>: My education
 - <span class="clickable-command">contact</span>: How to contact me
+- <span class="clickable-command">allinfo</span>: Display all information
 - <span class="clickable-command">email</span>: Email me
 - <span class="clickable-command">linkedin</span>: Open LinkedIn profile
 - <span class="clickable-command">github</span>: Open GitHub profile
@@ -135,7 +156,9 @@ function executeCommand(command, displayPrompt = true) {
         outputContainer.appendChild(promptLine);
     }
 
-    if (command === 'email') {
+    if (command.toLowerCase() === 'exit') {
+        handleExit();
+    } else if (command === 'email') {
         window.location.href = 'mailto:shaunak.balkundi@gmail.com';
         inputField.value = '';
     } else if (command in terminalCommands) {
@@ -147,7 +170,7 @@ function executeCommand(command, displayPrompt = true) {
         }
         outputContainer.appendChild(newOutput);
         inputField.value = '';
-        outputContainer.scrollTop = outputContainer.scrollHeight;
+        checkAndScroll();
     } else if (command === 'linkedin') {
         window.open('https://linkedin.com/in/shaunakbalkundi', '_blank');
         inputField.value = '';
@@ -157,15 +180,44 @@ function executeCommand(command, displayPrompt = true) {
     } else if (command === 'instagram') { 
         window.open('https://instagram.com/shaunakbalkundi', '_blank');
         inputField.value = '';
-    } else if (command === 'exit') {
-        inputField.value = '';
-        close();
     } else {
         const errorOutput = document.createElement('div');
-        errorOutput.innerHTML = `Command not found`;
+        errorOutput.innerHTML = `Command not found: ${command}`;
         outputContainer.appendChild(errorOutput);
         inputField.value = '';
-        outputContainer.scrollTop = outputContainer.scrollHeight;
+        checkAndScroll();
+    }
+}
+
+function handleExit() {
+    const exitMessage = document.createElement('div');
+    exitMessage.innerHTML = 'Exiting the terminal. Thank you for visiting!';
+    outputContainer.appendChild(exitMessage);
+    checkAndScroll();
+    // Disable input
+    inputField.disabled = true;
+    // Add a visual indicator that the terminal is closing
+    terminal.style.opacity = '0.5';
+    // Attempt to close the tab
+    setTimeout(() => {
+        try {
+            window.close();
+        } catch (e) {
+            // If closing fails, inform the user
+            const cannotCloseMessage = document.createElement('div');
+            cannotCloseMessage.innerHTML = 'Unable to close the tab automatically. You can close this tab manually. Thank you for using the terminal!';
+            outputContainer.appendChild(cannotCloseMessage);
+            checkAndScroll();
+            // Re-enable input in case the user wants to continue
+            inputField.disabled = false;
+            terminal.style.opacity = '1';
+        }
+    }, 2000);
+}
+
+function checkAndScroll() {
+    if (outputContainer.scrollHeight > outputContainer.clientHeight) {
+        outputContainer.scrollTop = outputContainer.scrollHeight - outputContainer.clientHeight;
     }
 }
 
@@ -190,6 +242,9 @@ outputContainer.addEventListener('click', function(e) {
 window.onload = function() {
     executeCommand('portofetch', true);
 };
+
+const observer = new MutationObserver(checkAndScroll);
+observer.observe(outputContainer, { childList: true, subtree: true });
 
 inputField.addEventListener('keydown', function(event) {
     if (event.key === 'ArrowUp') {
