@@ -146,6 +146,37 @@ Available commands:
     `
 };
 
+document.addEventListener("DOMContentLoaded", function() {
+    const portraitBg = document.getElementById('portrait-bg');
+    const landscapeBg = document.getElementById('landscape-bg');
+  
+    function loadImage(element) {
+        if (element.dataset.loaded) return;
+        const img = new Image();
+        const imageUrl = element.style.backgroundImage.slice(5, -2).replace(/['"]/g, '');
+        img.src = imageUrl;
+        img.onload = () => {
+          element.dataset.loaded = true;
+          updateOrientation();
+        };
+      }
+  
+    function updateOrientation() {
+      if (window.innerHeight > window.innerWidth) {
+        document.body.classList.add('portrait');
+        document.body.classList.remove('landscape');
+        loadImage(portraitBg);
+      } else {
+        document.body.classList.add('landscape');
+        document.body.classList.remove('portrait');
+        loadImage(landscapeBg);
+      }
+    }
+  
+    window.addEventListener('resize', updateOrientation);
+    updateOrientation();
+  });
+
 let commandHistory = [];
 let historyIndex = -1;
 function executeCommand(command, displayPrompt = true) {
@@ -262,3 +293,34 @@ inputField.addEventListener('keydown', function(event) {
         }
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const portraitBg = document.getElementById('portrait-bg');
+    const landscapeBg = document.getElementById('landscape-bg');
+  
+    function loadImage(element) {
+        if (element.dataset.loaded) return;
+        const img = new Image();
+        const imageUrl = element.style.backgroundImage.slice(5, -2).replace(/['"]/g, '');
+        img.src = imageUrl;
+        img.onload = () => {
+          element.dataset.loaded = true;
+          updateOrientation();
+        };
+      }
+  
+    function updateOrientation() {
+      if (window.innerHeight > window.innerWidth) {
+        document.body.classList.add('portrait');
+        document.body.classList.remove('landscape');
+        loadImage(portraitBg);
+      } else {
+        document.body.classList.add('landscape');
+        document.body.classList.remove('portrait');
+        loadImage(landscapeBg);
+      }
+    }
+  
+    window.addEventListener('resize', updateOrientation);
+    updateOrientation();
+  });
