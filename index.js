@@ -3,7 +3,6 @@ const inputField = document.getElementById('user-input');
 const outputContainer = document.getElementById('auto-run-output');
 const switchToMobileButton = document.getElementById('switch-to-mobile');
 const neofetchContainer = document.getElementById('neofetch-container');
-
 const asciiArt = `
          888                                          888               888      
          888                                          888               888      
@@ -47,38 +46,23 @@ const terminalCommands = {
             </div>
         `;
     },
-
+    "clear": function() {
+        outputContainer.innerHTML = '';
+    },
+    "about": function(container) {
+        container.innerHTML = window.terminalCommands.about;
+    },
     "skills": function(container) {
-        const skills = [
-            { name: "Python", icon: "devicon-python-plain" },
-            { name: "JavaScript", icon: "devicon-javascript-plain" },
-            { name: "Java", icon: "devicon-java-plain" },
-            { name: "Django", icon: "devicon-django-plain" },
-            { name: "ReactJS", icon: "devicon-react-original" },
-            { name: "Spring", icon: "devicon-spring-plain" },
-            { name: "NodeJS", icon: "devicon-nodejs-plain" },
-            { name: "FastAPI", icon: "devicon-fastapi-plain" },
-            { name: "MongoDB", icon: "devicon-mongodb-plain" },
-            { name: "PostgreSQL", icon: "devicon-postgresql-plain" },
-            { name: "MySQL", icon: "devicon-mysql-plain" },
-            { name: "Apache Kafka", icon: "devicon-apachekafka-plain" },
-            { name: "Git", icon: "devicon-git-plain" },
-            { name: "Linux", icon: "devicon-linux-plain" },
-            { name: "Docker", icon: "devicon-docker-plain" },
-            { name: "Redis", icon: "devicon-redis-plain" }
-        ];
-
-        const skillsHtml = skills.map(skill => `
-            <div class="skill-item">
-                <i class="${skill.icon}"></i>   ${skill.name}
-            </div>
-        `).join('');
-
-        container.innerHTML = `
-            <div class="skills-container">
-                ${skillsHtml}
-            </div>
-        `;
+        window.terminalCommands.skills(container);
+    },
+    "projects": function(container) {
+        container.innerHTML = window.terminalCommands.projects;
+    },
+    "education": function(container) {
+        container.innerHTML = window.terminalCommands.education;
+    },
+    "contact": function(container) {
+        container.innerHTML = window.terminalCommands.contact;
     },
     "allinfo": function(container) {
         const commands = ['about', 'skills', 'projects', 'education', 'contact'];
@@ -96,36 +80,6 @@ const terminalCommands = {
             }
         });
     },
-    "clear": function() {
-        outputContainer.innerHTML = '';
-    },
-    "about": `
-I'm Shaunak Balkundi, a Full Stack Developer. I'm mostly fascinated by anything that goes fast and I try to write code that works fast!
-    `,
-    "projects": `
-1. Online Banking & HR Management System
-   - Full Stack Application Written in React and Spring
-   - Successfully executed a two-phase project, delivering both an Online Banking System and a Human Resource Management System.
-   - Phase 1 focused on creating an intuitive Online Banking Platform with fundamental transaction features, along with additional functionalities like Credit Card, Gift Card, Loan, and Locker Management.
-   - Phase 2 centered on the development of a comprehensive HR Management System, incorporating modules for Employee Roster Tracking, Attendance, Leave, Payroll Management, Internal Job Portal, and Customer Support Portal, resulting in enhanced organizational efficiency and streamlined HR processes.
-
-2. Detection and Recognition of Illegally Parked Vehicles
-   - Image Recognition Application Written in Python
-   - Developed a real-time object detection system using OpenCV and YOLOv3.
-   - Integrated the object detection system with a camera to capture images and detect vehicles parked in no parking zones.
-   - Contributed to the open-source community by releasing the code and documenting the project on GitHub.
-    `,
-    "education": `
-B.Sc. in Computer Science, Electronics and Mathematics
-Dharampeth M P Deo Memorial Science College
-2020 - 2023
-    `,
-    "contact": `
-Email: shaunakbalkundi@example.com
-LinkedIn: https://linkedin.com/in/shaunakbalkundi
-GitHub: https://github.com/shaunaksb
-Instagram: https://instagram.com/shaunakbalkundi
-    `,
     "help": `
 Available commands:
 - <span class="clickable-command">help</span>: Show available commands
@@ -143,39 +97,38 @@ Available commands:
 - <span class="clickable-command">history</span>: Show command history
 - <span class="clickable-command">clear</span>: Clear the screen
 - <span class="clickable-command">exit</span>: Close the terminal
-    `
+`
 };
 
 document.addEventListener("DOMContentLoaded", function() {
     const portraitBg = document.getElementById('portrait-bg');
     const landscapeBg = document.getElementById('landscape-bg');
-  
+
     function loadImage(element) {
         if (element.dataset.loaded) return;
         const img = new Image();
         const imageUrl = element.style.backgroundImage.slice(5, -2).replace(/['"]/g, '');
         img.src = imageUrl;
         img.onload = () => {
-          element.dataset.loaded = true;
-          updateOrientation();
+            element.dataset.loaded = true;
+            updateOrientation();
         };
-      }
-  
+    }
+
     function updateOrientation() {
-      if (window.innerHeight > window.innerWidth) {
+        if (window.innerHeight > window.innerWidth) {
         document.body.classList.add('portrait');
         document.body.classList.remove('landscape');
         loadImage(portraitBg);
-      } else {
+        } else {
         document.body.classList.add('landscape');
         document.body.classList.remove('portrait');
         loadImage(landscapeBg);
-      }
+        }
     }
-  
     window.addEventListener('resize', updateOrientation);
     updateOrientation();
-  });
+});
 
 let commandHistory = [];
 let historyIndex = -1;
@@ -186,12 +139,8 @@ function executeCommand(command, displayPrompt = true) {
         promptLine.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span>`;
         outputContainer.appendChild(promptLine);
     }
-
     if (command.toLowerCase() === 'exit') {
         handleExit();
-    } else if (command === 'email') {
-        window.location.href = 'mailto:shaunak.balkundi@gmail.com';
-        inputField.value = '';
     } else if (command in terminalCommands) {
         const newOutput = document.createElement('div');
         if (typeof terminalCommands[command] === 'function') {
@@ -202,14 +151,17 @@ function executeCommand(command, displayPrompt = true) {
         outputContainer.appendChild(newOutput);
         inputField.value = '';
         checkAndScroll();
+    } else if (command === 'email') {
+        window.location.href = `mailto:${contactInfo.email}`;
+        inputField.value = '';    
     } else if (command === 'linkedin') {
-        window.open('https://linkedin.com/in/shaunakbalkundi', '_blank');
+        window.open(contactInfo.linkedin, '_blank');
         inputField.value = '';
     } else if (command === 'github') {
-        window.open('https://github.com/shaunaksb', '_blank');
+        window.open(contactInfo.github, '_blank');
         inputField.value = '';
     } else if (command === 'instagram') { 
-        window.open('https://instagram.com/shaunakbalkundi', '_blank');
+        window.open(contactInfo.instagram, '_blank');
         inputField.value = '';
     } else {
         const errorOutput = document.createElement('div');
@@ -297,30 +249,30 @@ inputField.addEventListener('keydown', function(event) {
 document.addEventListener("DOMContentLoaded", function() {
     const portraitBg = document.getElementById('portrait-bg');
     const landscapeBg = document.getElementById('landscape-bg');
-  
+
     function loadImage(element) {
         if (element.dataset.loaded) return;
         const img = new Image();
         const imageUrl = element.style.backgroundImage.slice(5, -2).replace(/['"]/g, '');
         img.src = imageUrl;
         img.onload = () => {
-          element.dataset.loaded = true;
-          updateOrientation();
+            element.dataset.loaded = true;
+            updateOrientation();
         };
-      }
-  
-    function updateOrientation() {
-      if (window.innerHeight > window.innerWidth) {
-        document.body.classList.add('portrait');
-        document.body.classList.remove('landscape');
-        loadImage(portraitBg);
-      } else {
-        document.body.classList.add('landscape');
-        document.body.classList.remove('portrait');
-        loadImage(landscapeBg);
-      }
     }
-  
+
+    function updateOrientation() {
+        if (window.innerHeight > window.innerWidth) {
+            document.body.classList.add('portrait');
+            document.body.classList.remove('landscape');
+            loadImage(portraitBg);
+        } else {
+            document.body.classList.add('landscape');
+            document.body.classList.remove('portrait');
+            loadImage(landscapeBg);
+        }
+    }
+
     window.addEventListener('resize', updateOrientation);
     updateOrientation();
-  });
+});
