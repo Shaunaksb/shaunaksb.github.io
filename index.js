@@ -24,7 +24,8 @@ const systemInfo = {
     "Frameworks": "Django, ReactJS, Spring, NodeJS, .NET",
     "Database": "MongoDB, PostgreSQL, MySQL",
     "Tools": "Git, Docker, Apache Kafka",
-    "For more information":" type 'help'"
+    "For more information":" type 'help'",
+    "For weather information":" type 'weather [station code]'"
 };
 
 const terminalCommands = {
@@ -97,7 +98,19 @@ Available commands:
 - <span class="clickable-command">history</span>: Show command history
 - <span class="clickable-command">clear</span>: Clear the screen
 - <span class="clickable-command">exit</span>: Close the terminal
-`
+- <span class="clickable-command">weather VANP</span>: Get weather information for a station. Example: weather at Nagpur Airport
+`,
+"greet": function(container, args) {
+        if (args.length > 0) {
+            const name = args[0];
+            container.innerHTML = `Hi, ${name}!`;
+        } else {
+            container.innerHTML = 'Please specify a name to greet. Usage: greet [name]';
+        }
+    },
+"weather": function(container, args) {
+        wx(container, args);
+    }
 };
 
 let commandHistory = [];
@@ -109,28 +122,29 @@ function executeCommand(command, displayPrompt = true) {
         promptLine.innerHTML = `[shaunaksb@portfolio]~$ <span class="command">${command}</span>`;
         outputContainer.appendChild(promptLine);
     }
-    if (command.toLowerCase() === 'exit') {
+    const [cmd, ...args] = command.split(' ');
+    if (cmd.toLowerCase() === 'exit') {
         handleExit();
-    } else if (command in terminalCommands) {
+    } else if (cmd in terminalCommands) {
         const newOutput = document.createElement('div');
-        if (typeof terminalCommands[command] === 'function') {
-            terminalCommands[command](newOutput);
+        if (typeof terminalCommands[cmd] === 'function') {
+            terminalCommands[cmd](newOutput, args);
         } else {
-            newOutput.innerHTML = terminalCommands[command];
+            newOutput.innerHTML = terminalCommands[cmd];
         }
         outputContainer.appendChild(newOutput);
         inputField.value = '';
         checkAndScroll();
-    } else if (command === 'email') {
+    } else if (cmd === 'email') {
         window.location.href = `mailto:${contactInfo.email}`;
         inputField.value = '';    
-    } else if (command === 'linkedin') {
+    } else if (cmd === 'linkedin') {
         window.open(contactInfo.linkedin, '_blank');
         inputField.value = '';
-    } else if (command === 'github') {
+    } else if (cmd === 'github') {
         window.open(contactInfo.github, '_blank');
         inputField.value = '';
-    } else if (command === 'instagram') { 
+    } else if (cmd === 'instagram') { 
         window.open(contactInfo.instagram, '_blank');
         inputField.value = '';
     } else {
