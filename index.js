@@ -25,7 +25,7 @@ const systemInfo = {
     "Database": "MongoDB, PostgreSQL, MySQL",
     "Tools": "Git, Docker, Apache Kafka",
     "For more information":" type 'help'",
-    "For weather information":" type 'weather [station code]'"
+    "For weather information":" type 'weather [station icao code]'"
 };
 
 const terminalCommands = {
@@ -98,7 +98,7 @@ Available commands:
 - <span class="clickable-command">history</span>: Show command history
 - <span class="clickable-command">clear</span>: Clear the screen
 - <span class="clickable-command">exit</span>: Close the terminal
-- <span class="clickable-command">weather VANP</span>: Get weather information for a station. Example: weather at Nagpur Airport
+- <span class="clickable-command">weather VANP</span>: Get weather information for an airport in form of METAR. Example: weather at Nagpur Airport
 `,
 "greet": function(container, args) {
         if (args.length > 0) {
