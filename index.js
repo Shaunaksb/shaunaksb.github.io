@@ -89,6 +89,7 @@ Available commands:
 - <span class="clickable-command">skills</span>: Show my skills
 - <span class="clickable-command">projects</span>: My projects
 - <span class="clickable-command">education</span>: My education
+- <span class="clickable-command">experience</span>: My experience
 - <span class="clickable-command">contact</span>: How to contact me
 - <span class="clickable-command">allinfo</span>: Display all information
 - <span class="clickable-command">email</span>: Email me
@@ -110,6 +111,9 @@ Available commands:
     },
 "weather": function(container, args) {
         wx(container, args);
+    },
+    "experience": function(container) {
+        container.innerHTML = window.terminalCommands.experience;
     }
 };
 

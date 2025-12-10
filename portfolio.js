@@ -58,8 +58,12 @@ window.terminalCommands.projects = `
     - Contributed to the open-source community by releasing the code and documenting the project on GitHub.
 `;
 window.terminalCommands.education = `
+M.Sc. Computer Science
+Fergusson College, Pune
+2025 - 2027
+
 B.Sc. in Computer Science, Electronics and Mathematics
-Dharampeth M P Deo Memorial Science College
+RTM Nagpur University, Nagpur
 2020 - 2023
 `;
 window.terminalCommands.contact = `
@@ -70,3 +74,10 @@ Instagram: ${contactInfo.instagram}
 Run a commnand to go to the respective link. The link gets copied to the clipboard as well.
 `;
 
+window.terminalCommands.experience = `
+Backend Developer Intern
+Assystant
+Migrated a legacy proect based on Django MVT architecture to Django Rest Framework
+Dockerised the application and autmated the deployment process
+May 2025 - Present
+`;
