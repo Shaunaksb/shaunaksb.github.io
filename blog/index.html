@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Shaunak Balkundi</title>
+    <meta name="description" content="Technical articles and research notes by Shaunak Balkundi on systems engineering, TinyML, orbital edge computing, and full-stack development.">
+    <meta name="keywords" content="Shaunak Balkundi, Blog, Research Notes, TinyML, Orbital Edge Computing, Systems Engineering, Full Stack Developer">
+    <meta name="author" content="Shaunak Balkundi">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shaunaksb.github.io/blog/">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Blog | Shaunak Balkundi">
+    <meta property="og:description" content="Technical articles and research notes by Shaunak Balkundi on systems engineering, TinyML, orbital edge computing, and full-stack development.">
+    <meta property="og:url" content="https://shaunaksb.github.io/blog/">
+    <meta property="og:image" content="https://shaunaksb.github.io/images/img.webp">
+    <meta property="og:site_name" content="Shaunak Balkundi">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Blog | Shaunak Balkundi">
+    <meta name="twitter:description" content="Technical articles and research notes by Shaunak Balkundi on systems engineering, TinyML, orbital edge computing, and full-stack development.">
+    <meta name="twitter:image" content="https://shaunaksb.github.io/images/img.webp">
+    <meta name="twitter:creator" content="@ShaunakBalkundi">
+
+    <link rel="stylesheet" href="/css/terminal.css">
+    <link rel="stylesheet" href="/css/blog.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Shaunak Balkundi's Blog",
+        "url": "https://shaunaksb.github.io/blog/",
+        "description": "Technical articles and research notes by Shaunak Balkundi.",
+        "author": {
+            "@type": "Person",
+            "name": "Shaunak Balkundi",
+            "url": "https://shaunaksb.github.io/"
+        }
+    }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DF8EEBRS9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-6DF8EEBRS9');
+    </script>
+</head>
+<body class="blog-page">
+    <div class="background" id="portrait-bg" data-bg="/images/portrait.webp"></div>
+    <div class="background" id="landscape-bg" data-bg="/images/landscape.webp"></div>
+
+    <div id="content-wrapper">
+        <main id="terminal">
+            <div class="blog-shell">
+                <nav class="blog-nav" aria-label="Blog navigation">
+                    <div class="blog-nav-links">
+                        <span class="blog-nav-prompt">[shaunaksb@portfolio]~/blog$</span>
+                        <a href="/">cd ~ (terminal)</a>
+                        <a href="/mobile.html">gui</a>
+                        <a href="/blog/">ls (posts)</a>
+                    </div>
+                    <div class="blog-search-bar">
+                        <label class="blog-search-prompt" for="blog-search-input">grep -i</label>
+                        <input
+                            type="text"
+                            id="blog-search-input"
+                            placeholder="search posts, tags... (or type cd ~, gui, ls)"
+                            autocomplete="off"
+                            aria-label="Search blog posts or enter navigation command"
+                            autofocus
+                        >
+                    </div>
+                </nav>
+
+                <header class="blog-header">
+                    <h1>Blog &amp; Research Notes</h1>
+                    <p class="blog-subtitle">Deep dives into fast code, embedded systems, and research.</p>
+                </header>
+
+                <div id="blog-search-status" class="blog-meta" aria-live="polite"></div>
+
+                <section id="blog-posts-list" aria-label="Blog posts">
+                    <noscript>
+                        <article class="blog-card">
+                            <h2 class="blog-card-title">
+                                <a href="/blog/orbital-edge-intelligence/">Orbital Edge Intelligence: TinyML on Sub-Watt Space Microcontrollers</a>
+                            </h2>
+                            <div class="blog-meta">2026-11-17 · 8 min read</div>
+                            <p>How AstroTinyML uses SNR-weighted Quantization-Aware Training, mixed INT4/INT8/FP16 execution, and deterministic 73.4 KB static SRAM scheduling to detect faint astrophysical and Earth-observation transients in orbit.</p>
+                        </article>
+                    </noscript>
+                </section>
+
+                <nav id="blog-pagination" class="blog-pagination" aria-label="Blog pagination"></nav>
+            </div>
+        </main>
+        <button id="switch-to-mobile" class="button" type="button">Switch to GUI</button>
+    </div>
+
+    <footer id="footer">
+        <a href="https://github.com/Shaunaksb/shaunaksb.github.io" target="_blank" rel="noopener noreferrer">Made by Shaunak Balkundi</a>
+        · <a href="/">Terminal</a>
+    </footer>
+
+    <script type="module" src="/js/main-blog.js"></script>
+</body>
+</html>
