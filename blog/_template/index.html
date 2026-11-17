@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST_TITLE | Shaunak Balkundi</title>
+    <meta name="description" content="POST_DESCRIPTION">
+    <meta name="keywords" content="POST_KEYWORDS, Shaunak Balkundi">
+    <meta name="author" content="Shaunak Balkundi">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shaunaksb.github.io/blog/POST_SLUG/">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="POST_TITLE">
+    <meta property="og:description" content="POST_DESCRIPTION">
+    <meta property="og:url" content="https://shaunaksb.github.io/blog/POST_SLUG/">
+    <meta property="og:image" content="https://shaunaksb.github.io/images/img.webp">
+    <meta property="og:site_name" content="Shaunak Balkundi">
+    <meta property="article:published_time" content="PUBLISHED_DATE">
+    <meta property="article:author" content="Shaunak Balkundi">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="POST_TITLE">
+    <meta name="twitter:description" content="POST_DESCRIPTION">
+    <meta name="twitter:image" content="https://shaunaksb.github.io/images/img.webp">
+    <meta name="twitter:creator" content="@ShaunakBalkundi">
+
+    <link rel="stylesheet" href="/css/terminal.css">
+    <link rel="stylesheet" href="/css/blog.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "POST_TITLE",
+        "description": "POST_DESCRIPTION",
+        "datePublished": "PUBLISHED_DATE",
+        "dateModified": "PUBLISHED_DATE",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://shaunaksb.github.io/blog/POST_SLUG/"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Shaunak Balkundi",
+            "url": "https://shaunaksb.github.io/"
+        }
+    }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DF8EEBRS9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-6DF8EEBRS9');
+    </script>
+</head>
+<body class="blog-page">
+    <div class="background" id="portrait-bg" data-bg="/images/portrait.webp"></div>
+    <div class="background" id="landscape-bg" data-bg="/images/landscape.webp"></div>
+
+    <div id="content-wrapper">
+        <main id="terminal">
+            <div class="blog-shell">
+                <nav class="blog-nav" aria-label="Blog navigation">
+                    <div class="blog-nav-links">
+                        <span class="blog-nav-prompt">[shaunaksb@portfolio]~/blog$</span>
+                        <a href="/">cd ~ (terminal)</a>
+                        <a href="/blog/">cd .. (posts)</a>
+                        <a href="/mobile.html">gui</a>
+                    </div>
+                    <div class="blog-search-bar">
+                        <label class="blog-search-prompt" for="blog-command-input">$</label>
+                        <input
+                            type="text"
+                            id="blog-command-input"
+                            placeholder="type cd .., cd ~, gui (↑/↓ scroll)"
+                            autocomplete="off"
+                            aria-label="Blog navigation command input"
+                            autofocus
+                        >
+                    </div>
+                    <div id="blog-cmd-feedback" class="blog-cmd-feedback" aria-live="polite"></div>
+                </nav>
+
+                <article class="blog-article">
+                    <a class="blog-back-link" href="/blog/">&larr; Back to all posts</a>
+
+                    <header>
+                        <h1>POST_TITLE</h1>
+                        <div class="blog-meta">
+                            By Shaunak Balkundi · <time datetime="PUBLISHED_DATE">PUBLISHED_DATE</time> · READING_TIME
+                        </div>
+                        <div class="blog-tags">
+                            <span class="blog-tag">Tag 1</span>
+                            <span class="blog-tag">Tag 2</span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p class="lead">One-paragraph hook summarizing the problem and core takeaway.</p>
+
+                        <h2>1. Section Heading</h2>
+                        <p>Write your section content here.</p>
+
+                        <div class="blog-callout">
+                            <p><strong>Key Takeaway:</strong> Highlight an important insight or benchmark here.</p>
+                        </div>
+
+                        <h2>2. Code or Math Example</h2>
+                        <p>Inline math like $E = mc^2$ and code blocks render cleanly:</p>
+                        <pre><code>// Example code block
+alignas(16) static uint8_t g_tensor_arena[75 * 1024];</code></pre>
+                    </section>
+                </article>
+            </div>
+        </main>
+        <button id="switch-to-mobile" class="button" type="button">Switch to GUI</button>
+    </div>
+
+    <footer id="footer">
+        <a href="https://github.com/Shaunaksb/shaunaksb.github.io" target="_blank" rel="noopener noreferrer">Made by Shaunak Balkundi</a>
+        · <a href="/blog/">Blog</a>
+    </footer>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }] });"></script>
+    <script type="module" src="/js/main-blog-post.js"></script>
+</body>
+</html>

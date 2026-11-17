@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbital Edge Intelligence: TinyML on Sub-Watt Space Microcontrollers | Shaunak Balkundi</title>
+    <meta name="description" content="How AstroTinyML combines SNR-weighted Quantization-Aware Training, mixed INT4/INT8/FP16 execution, and a 73.4 KB static tensor arena to detect faint transients in orbit.">
+    <meta name="keywords" content="Orbital Edge Computing, TinyML, Quantization-Aware Training, AstroTinyML, Gamma-Ray Bursts, NISAR, Vera C. Rubin Observatory, Embedded C++, Shaunak Balkundi">
+    <meta name="author" content="Shaunak Balkundi">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shaunaksb.github.io/blog/orbital-edge-intelligence/">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Orbital Edge Intelligence: TinyML on Sub-Watt Space Microcontrollers">
+    <meta property="og:description" content="How AstroTinyML combines SNR-weighted Quantization-Aware Training, mixed INT4/INT8/FP16 execution, and a 73.4 KB static tensor arena to detect faint transients in orbit.">
+    <meta property="og:url" content="https://shaunaksb.github.io/blog/orbital-edge-intelligence/">
+    <meta property="og:image" content="https://shaunaksb.github.io/images/img.webp">
+    <meta property="og:site_name" content="Shaunak Balkundi">
+    <meta property="article:published_time" content="2026-11-17">
+    <meta property="article:author" content="Shaunak Balkundi">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Orbital Edge Intelligence: TinyML on Sub-Watt Space Microcontrollers">
+    <meta name="twitter:description" content="How AstroTinyML combines SNR-weighted Quantization-Aware Training, mixed INT4/INT8/FP16 execution, and a 73.4 KB static tensor arena to detect faint transients in orbit.">
+    <meta name="twitter:image" content="https://shaunaksb.github.io/images/img.webp">
+    <meta name="twitter:creator" content="@ShaunakBalkundi">
+
+    <link rel="stylesheet" href="/css/terminal.css">
+    <link rel="stylesheet" href="/css/blog.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Orbital Edge Intelligence: TinyML on Sub-Watt Space Microcontrollers",
+        "description": "How AstroTinyML combines SNR-weighted Quantization-Aware Training, mixed INT4/INT8/FP16 execution, and a 73.4 KB static tensor arena to detect faint transients in orbit.",
+        "datePublished": "2026-11-17",
+        "dateModified": "2026-11-17",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://shaunaksb.github.io/blog/orbital-edge-intelligence/"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Shaunak Balkundi",
+            "url": "https://shaunaksb.github.io/"
+        }
+    }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DF8EEBRS9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-6DF8EEBRS9');
+    </script>
+</head>
+<body class="blog-page">
+    <div class="background" id="portrait-bg" data-bg="/images/portrait.webp"></div>
+    <div class="background" id="landscape-bg" data-bg="/images/landscape.webp"></div>
+
+    <div id="content-wrapper">
+        <main id="terminal">
+            <div class="blog-shell">
+                <nav class="blog-nav" aria-label="Blog navigation">
+                    <div class="blog-nav-links">
+                        <span class="blog-nav-prompt">[shaunaksb@portfolio]~/blog/orbital-edge-intelligence$</span>
+                        <a href="/">cd ~ (terminal)</a>
+                        <a href="/blog/">cd .. (posts)</a>
+                        <a href="/mobile.html">gui</a>
+                    </div>
+                    <div class="blog-search-bar">
+                        <label class="blog-search-prompt" for="blog-command-input">$</label>
+                        <input
+                            type="text"
+                            id="blog-command-input"
+                            placeholder="type cd .., cd ~, gui (↑/↓ scroll)"
+                            autocomplete="off"
+                            aria-label="Blog navigation command input"
+                            autofocus
+                        >
+                    </div>
+                    <div id="blog-cmd-feedback" class="blog-cmd-feedback" aria-live="polite"></div>
+                </nav>
+
+                <article class="blog-article">
+                    <a class="blog-back-link" href="/blog/">&larr; Back to all posts</a>
+
+                    <header>
+                        <h1>Orbital Edge Intelligence: TinyML on Sub-Watt Space Microcontrollers</h1>
+                        <div class="blog-meta">
+                            By Shaunak Balkundi · <time datetime="2026-11-17">2026-11-17</time> · 8 min read · Research Project (CSC-610, Fergusson College)
+                        </div>
+                        <div class="blog-tags">
+                            <span class="blog-tag">TinyML</span>
+                            <span class="blog-tag">Orbital Edge Computing</span>
+                            <span class="blog-tag">Quantization</span>
+                            <span class="blog-tag">Embedded C++</span>
+                            <span class="blog-tag">Astrophysics</span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p class="lead">
+                            Modern spaceborne instruments generate gigabits of telemetry per second, yet Low Earth Orbit (LEO)
+                            ground contacts last only 8 to 12 minutes per pass. <strong>AstroTinyML</strong> bridges that gap by
+                            turning spacecraft from passive data recorders into autonomous, sub-watt "extract-and-actuate" edge nodes.
+                        </p>
+
+                        <h2>1. The Store-and-Downlink Latency Trap</h2>
+                        <p>
+                            Satellites in LEO (400–700 km altitude, traveling at ~7.6 km/s) get just 60 to 90 minutes of total
+                            ground-station contact per 24-hour cycle. Under the traditional <em>store-and-downlink</em> model,
+                            raw telemetry is buffered to solid-state recorders, dumped during an overpass, and processed hours or
+                            days later on Earth.
+                        </p>
+                        <p>That 4-to-24-hour delay breaks down in two critical regimes:</p>
+                        <ul>
+                            <li>
+                                <strong>Disaster Response (NISAR Nepal Floods):</strong> High-resolution dual-frequency SAR imagery
+                                captured over flooded Himalayan valleys waited in downlink and server queues for days after the
+                                disaster unfolded, instead of beaming emergency flood vectors over low-bandwidth relays within minutes.
+                            </li>
+                            <li>
+                                <strong>Multi-Messenger Astrophysics &amp; Alert Deluges:</strong> Wide-field surveys like the Vera C.
+                                Rubin Observatory generate ~15 TB and 10 million alerts per night, while Gamma-Ray Bursts (GRBs)
+                                and kilonovae fade rapidly via steep power-law decay:
+                            </li>
+                        </ul>
+
+                        <p>$$F(t) = F_0 \cdot \left(\frac{t}{t_0}\right)^{-\alpha}, \quad \alpha \ge 1.2$$</p>
+
+                        <p>
+                            By the time ground operators verify an event and uplink a repointing command, the transient has faded
+                            by 3 to 5 orders of magnitude.
+                        </p>
+
+                        <div class="blog-pipeline">
+                            <strong>Legacy Ground-in-the-Loop (4–24 hrs):</strong><br>
+                            Sensor &rarr; SSR Buffer &rarr; Ground Pass (1–12 hrs) &rarr; Ground Ingestion / MOC (1–4 hrs) &rarr; Uplink Slew<br><br>
+                            <strong>AstroTinyML Extract-and-Actuate (&le; 250 ms):</strong><br>
+                            DMA Raw Stream &rarr; AstroTinyML INT8/INT4 Edge Inference (&le; 200 ms) &rarr; Event ID &rarr; Autonomous Slew / ISL Alert
+                        </div>
+
+                        <h2>2. One Mathematical Abstraction Across 1D and 2D Sensors</h2>
+                        <p>
+                            Whether monitoring 1D gamma-ray photon ratemeters (AGILE, Fermi GBM), 2D optical difference images
+                            (Vera C. Rubin), or 2D SAR log-ratio maps (NISAR), quiescent background accounts for over 99.8% of
+                            samples. AstroTinyML models all three as an inhomogeneous point process and extracts a unified
+                            standardized statistical excursion $S_i$ over a causal background window:
+                        </p>
+
+                        <p>$$S_i = \frac{x_i - \hat{b}_i}{\hat{\sigma}_{b,i}}$$</p>
+
+                        <p>
+                            In 1D high-energy ratemeters this reduces to Li-Ma Poisson significance; in 2D optical surveys to
+                            normalized difference excursions; and in 2D SAR to normalized log-ratio amplitude deviations. Operating
+                            directly on $S_i \ge 2.0$ gives complete mathematical invariance across sensor modalities.
+                        </p>
+
+                        <h2>3. Why Standard Quantization Fails—and How SNR-QAT Fixes It</h2>
+                        <p>
+                            Standard 8-bit or 4-bit quantization minimizes global Mean Squared Error (MSE) across calibration data.
+                            Because 99.8% of orbital telemetry is background noise, the resulting quantization step size
+                            $\Delta = \frac{x_{\max} - x_{\min}}{2^b - 1}$ rounds subtle $2\sigma\text{--}3.5\sigma$ astrophysical
+                            transients straight to zero—causing over a <strong>40% drop in sub-threshold recall</strong>.
+                        </p>
+                        <p>
+                            AstroTinyML resolves this with <strong>SNR-Weighted Quantization-Aware Training (SNR-QAT)</strong>
+                            paired with Learned Step Size Quantization (LSQ). Each training sample receives a dynamic
+                            excess-significance weight $w_i$ and an asymmetric hinge loss $\mathcal{L}_{\text{asym}}$ that heavily
+                            penalizes missed events (false negatives):
+                        </p>
+
+                        <p>$$w_i = 1.0 + \gamma \cdot \max\left(0,\; \frac{y_i - b_i}{\sqrt{b_i + \epsilon}}\right), \qquad \mathcal{L}_{\text{total}} = \frac{1}{N}\sum_{i=1}^{N} w_i \cdot \left[\mathcal{L}_{\text{CE}}(y_i, \hat{y}_i) + \beta\,\mathcal{L}_{\text{asym}}(y_i, \hat{y}_i)\right]$$</p>
+
+                        <p>
+                            Backpropagating $\frac{\partial \mathcal{L}_{\text{total}}}{\partial \alpha_l}$ directly into the LSQ
+                            scale factors adaptively shrinks $\alpha_l$ in early convolutional layers so sub-$\sigma$ signals remain
+                            resolvable.
+                        </p>
+
+                        <h2>4. Asymmetric Mixed-Precision &amp; 73.4 KB Deterministic SRAM</h2>
+                        <p>
+                            Aerospace standards (ECSS-E-ST-40C, NASA-STD-8739.8) strictly forbid dynamic heap allocation
+                            (<code>malloc</code>/<code>free</code>) during flight. Space-grade microcontrollers such as the ARM
+                            Cortex-M4/M7 (STM32F756, Vorago VA416x0) or RISC-V cores (Cobham Gaisler NOEL-V) offer less than
+                            512 KB of on-chip SRAM.
+                        </p>
+                        <ul>
+                            <li><strong>Front-End Stem &amp; Backbone Activations (INT8):</strong> Kept in native INT8 to match ARM CMSIS-NN <code>SMLAD</code> SIMD instructions with zero runtime casting.</li>
+                            <li><strong>Deep Layer Weights (INT4):</strong> Packed two weights per byte in read-only Flash (50% Flash savings) and unpacked in-register via single-cycle bit-shifts.</li>
+                            <li><strong>Single-Point Decision Head (FP16):</strong> Cast only once after Global Average Pooling on a 64–128 element vector to prevent sigmoid saturation.</li>
+                        </ul>
+
+                        <p>
+                            Using an offline interval-graph coloring memory scheduler, overlapping tensor lifetimes are packed into
+                            a single statically allocated <code>.bss</code> array:
+                        </p>
+
+                        <pre><code>// 75 KB static .bss tensor arena (bounded peak: ~73.4 KB)
+alignas(16) static uint8_t g_tensor_arena[75 * 1024];</code></pre>
+
+                        <div class="blog-callout">
+                            <p>
+                                <strong>Memory Guarantee:</strong> Because model weights execute in-place from Flash (XIP), peak
+                                dynamic SRAM is bounded to <strong>~73.4 KB</strong> (14.7% of a 512 KB budget)—leaving over 425 KB
+                                of headroom for telemetry buffers and ADCS flight control.
+                            </p>
+                        </div>
+
+                        <h2>5. Surviving Vacuum Thermal Limits &amp; Eclipse Brownouts</h2>
+                        <p>
+                            In a vacuum, there is no convective cooling—only radiative dissipation ($Q_{\text{rad}} = \epsilon \sigma_{\text{SB}} A_{\text{rad}} (T_{\text{rad}}^4 - T_{\text{space}}^4)$).
+                            While COTS accelerators (5–15 W) quickly exceed thermal limits on smallsats, AstroTinyML runs below
+                            <strong>0.8 W</strong> and <strong>&le; 45 mJ per 1.0 s inference window</strong>, maintaining steady
+                            operation through 35-minute orbital eclipses. Atomic 1-second windows write a 32-byte checkpoint token
+                            to non-volatile FRAM/MRAM so inference resumes immediately after a power brownout.
+                        </p>
+
+                        <h2>6. Target Dual-Domain Benchmarks</h2>
+                        <div class="blog-table-wrap">
+                            <table class="blog-table">
+                                <thead>
+                                    <tr>
+                                        <th>Domain</th>
+                                        <th>Metric</th>
+                                        <th>Target Specification</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Astrophysics</td>
+                                        <td>Sub-threshold ($2\sigma\text{--}3.5\sigma$) Recall</td>
+                                        <td>&ge; 92.0% (vs. &le; 55% uniform INT8)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Astrophysics</td>
+                                        <td>Bright (&gt; $5\sigma$) Recall</td>
+                                        <td>&ge; 99.5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Astrophysics</td>
+                                        <td>False Alarm Rate (FAR)</td>
+                                        <td>&le; 1 / orbit (90 min)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Embedded</td>
+                                        <td>Peak Dynamic SRAM</td>
+                                        <td>&le; 75.0 KB (Ceiling: 500 KB)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Embedded</td>
+                                        <td>Inference Latency (Cortex-M7)</td>
+                                        <td>&le; 120 ms per 1.0 s window</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Embedded</td>
+                                        <td>Heap Fragmentation</td>
+                                        <td>0 bytes (strictly zero heap)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>
+                            By uniting statistical excursion modeling, SNR-preserving quantization, and compile-time memory
+                            verification, AstroTinyML lays the groundwork for autonomous space observatories capable of reacting
+                            to cosmic and terrestrial emergencies in milliseconds rather than days.
+                        </p>
+                    </section>
+                </article>
+            </div>
+        </main>
+        <button id="switch-to-mobile" class="button" type="button">Switch to GUI</button>
+    </div>
+
+    <footer id="footer">
+        <a href="https://github.com/Shaunaksb/shaunaksb.github.io" target="_blank" rel="noopener noreferrer">Made by Shaunak Balkundi</a>
+        · <a href="/blog/">Blog</a>
+    </footer>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }] });"></script>
+    <script type="module" src="/js/main-blog-post.js"></script>
+</body>
+</html>
